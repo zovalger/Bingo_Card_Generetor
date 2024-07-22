@@ -1,0 +1,5 @@
+node_modules
+
+*.xlsx
+
+card_data.json

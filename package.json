@@ -1,0 +1,20 @@
+{
+	"name": "bingo-card-generator",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node ./src/generateExcel",
+		"build": "node ./src/generateData",
+		"start:dev-excel": "nodemon ./src/devGenerateExcel",
+		"start:dev-card": "nodemon ./src/devGenerateData",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"excel4node": "^1.8.2",
+		"nodemon": "^3.1.4"
+	}
+}
