@@ -4,10 +4,11 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node ./src/generateExcel",
-		"build": "node ./src/generateData",
-		"start:dev-excel": "nodemon ./src/devGenerateExcel",
-		"start:dev-card": "nodemon ./src/devGenerateData",
+		"start": "node ./src/G_Excel",
+		"build": "node ./src/G_data",
+		"start:prod": "npm run build && npm run start",
+		"start:dev-excel": "nodemon ./src/devGenerateExcel --config ./nodemon.json",
+		"start:dev-data": "nodemon ./src/devGenerateData --config ./nodemon.json",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],

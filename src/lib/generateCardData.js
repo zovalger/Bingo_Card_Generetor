@@ -2,12 +2,12 @@ const fs = require("fs");
 const path = require("path");
 
 const cards = [];
-const generateColumNums = (min, max, star = false) => {
+const generateColumNums = (index, min, max, star = false) => {
 	const column = [];
 
 	while (column.length < 5) {
 		if (star && column.length == 2) {
-			column.push("⭐");
+			column.push(`Serie \n N° ${index + 1}`);
 			continue;
 		}
 
@@ -19,15 +19,15 @@ const generateColumNums = (min, max, star = false) => {
 	return column;
 };
 
-const createACard = () => {
+const createACard = (index) => {
 	// generar columnas
 
 	const matriz = [
-		generateColumNums(1, 15),
-		generateColumNums(16, 30),
-		generateColumNums(31, 45, true),
-		generateColumNums(46, 60),
-		generateColumNums(61, 75),
+		generateColumNums(index, 1, 15),
+		generateColumNums(index, 16, 30),
+		generateColumNums(index, 31, 45, true),
+		generateColumNums(index, 46, 60),
+		generateColumNums(index, 61, 75),
 	];
 
 	return matriz;
@@ -65,7 +65,7 @@ const verifyUnic = (matriz) => {
 
 const generateCards = (number) => {
 	while (cards.length < number) {
-		const card = createACard(1, 15);
+		const card = createACard(cards.length, 1, 15);
 
 		if (verifyUnic(card)) {
 			console.log("generado unico", card);
@@ -77,7 +77,7 @@ const generateCards = (number) => {
 const generateCardData = (count = 12) => {
 	generateCards(count);
 
-	fs.writeFileSync("card_data.json", JSON.stringify(cards));
+	fs.writeFileSync("./out/card_data.json", JSON.stringify(cards));
 };
 
-generateCardData(300);
+module.exports = { generateCardData };

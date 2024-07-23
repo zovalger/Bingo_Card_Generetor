@@ -2,7 +2,7 @@
 const path = require("path");
 const xl = require("excel4node");
 
-const card_data = require("../card_data.json");
+const card_data = require("../../out/card_data.json");
 
 const constructCard = (wb, ws, data, index) => {
 	const styleTitle = wb.createStyle({
@@ -15,6 +15,12 @@ const constructCard = (wb, ws, data, index) => {
 			// wrapText: true,
 			horizontal: "center",
 			vertical: "center",
+		},
+		fill: {
+			type: "pattern",
+			patternType: "solid",
+			bgColor: "#FF3300",
+			fgColor: "#FF3300",
 		},
 		border: {
 			// §18.8.4 border (Border)
@@ -43,6 +49,36 @@ const constructCard = (wb, ws, data, index) => {
 			// outline: boolean
 		},
 		// numberFormat: "$#,##0.00; ($#,##0.00); -",
+	});
+
+	const styleCenter = wb.createStyle({
+		font: {
+			size: 12,
+			bold: true,
+		},
+		alignment: {
+			wrapText: true,
+			horizontal: "center",
+			vertical: "center",
+		},
+		border: {
+			left: {
+				style: "medium",
+				color: "black",
+			},
+			right: {
+				style: "medium",
+				color: "black",
+			},
+			top: {
+				style: "medium",
+				color: "black",
+			},
+			bottom: {
+				style: "medium",
+				color: "black",
+			},
+		},
 	});
 
 	const styleCommon = wb.createStyle({
@@ -107,12 +143,28 @@ const constructCard = (wb, ws, data, index) => {
 		.string("O")
 		.style(styleTitle);
 
+	ws.addImage({
+		path: "./src/assets/background.png",
+		type: "picture",
+		position: {
+			type: "twoCellAnchor",
+			from: {
+				col: 1 + colOffset,
+				row: 2 + rowOffset,
+			},
+			to: {
+				col: 6 + colOffset,
+				row: 7 + rowOffset,
+			},
+		},
+	});
+
 	data.forEach((col, colIndex) => {
 		col.forEach((row, rowIndex) => {
 			if (typeof row === "string")
 				ws.cell(rowIndex + 2 + rowOffset, colIndex + 1 + colOffset)
 					.string(row)
-					.style(styleCommon);
+					.style(styleCenter);
 			else
 				ws.cell(rowIndex + 2 + rowOffset, colIndex + 1 + colOffset)
 					.number(row)
@@ -150,7 +202,11 @@ const generateExcel = (fileName = "Excel.xlsx") => {
 		constructCard(wb, ws, data, index);
 	}
 
-	wb.write(fileName);
+	wb.write(`./out/${fileName}`);
+
+	console.log("Excel Generado");
 };
 
-generateExcel("CardsFormat.xlsx");
+// generateExcel("CardsFormat.xlsx");
+
+module.exports = { generateExcel };
